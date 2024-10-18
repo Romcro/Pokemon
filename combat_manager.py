@@ -1,22 +1,22 @@
 import random
 import time
 
-# Fonction de combat Pokémon
-def combat(pokemon1, pokemon2, update_arena):
+# Fonction pour simuler un combat entre deux Pokémon
+def combat(f1, f2, arena_callback=None):
     fighter1 = {
-        'name': pokemon1["name"],
-        'hp': pokemon1["stats"][0]["base_stat"],
-        'attack': pokemon1["stats"][1]["base_stat"],
-        'defense': pokemon1["stats"][2]["base_stat"],
-        'speed': pokemon1["stats"][5]["base_stat"]
+        'name': f1["name"],
+        'hp': f1["stats"][0]["base_stat"],  # HP
+        'attack': f1["stats"][1]["base_stat"],  # Attaque
+        'defense': f1["stats"][2]["base_stat"],  # Défense
+        'speed': f1["stats"][5]["base_stat"]  # Vitesse
     }
-
+    
     fighter2 = {
-        'name': pokemon2["name"],
-        'hp': pokemon2["stats"][0]["base_stat"],
-        'attack': pokemon2["stats"][1]["base_stat"],
-        'defense': pokemon2["stats"][2]["base_stat"],
-        'speed': pokemon2["stats"][5]["base_stat"]
+        'name': f2["name"],
+        'hp': f2["stats"][0]["base_stat"],
+        'attack': f2["stats"][1]["base_stat"],
+        'defense': f2["stats"][2]["base_stat"],
+        'speed': f2["stats"][5]["base_stat"]
     }
 
     # Déterminer qui attaque en premier
@@ -25,19 +25,26 @@ def combat(pokemon1, pokemon2, update_arena):
     else:
         attaquant, defenseur = fighter2, fighter1
 
-    update_arena(f"{attaquant['name']} attaque en premier !")
+    if arena_callback:
+        arena_callback(f"Le combat commence ! {attaquant['name']} attaque en premier !")
 
+    # Boucle de combat
     while defenseur['hp'] > 0:
-        damage = max(1, attaquant['attack'] - defenseur['defense'])
+        damage = attaquant['attack'] - defenseur['defense']
+        damage = max(1, damage)  # Le minimum de dégâts est 1
         defenseur['hp'] -= damage
-        update_arena(f"{attaquant['name']} inflige {damage} dégâts à {defenseur['name']}")
+
+        if arena_callback:
+            arena_callback(f"{attaquant['name']} attaque {defenseur['name']} et inflige {damage} dégâts.")
+            arena_callback(f"{defenseur['name']} a maintenant {defenseur['hp']} HP.")
 
         if defenseur['hp'] <= 0:
-            update_arena(f"{defenseur['name']} est vaincu ! {attaquant['name']} gagne le combat !")
+            if arena_callback:
+                arena_callback(f"{defenseur['name']} est vaincu ! {attaquant['name']} gagne le combat.")
             return attaquant
 
-        # Inverser les rôles
+        # Inverser les rôles pour le prochain tour
         attaquant, defenseur = defenseur, attaquant
 
-        time.sleep(1)  # Pause pour simuler le déroulement du combat
-
+        # Pause pour visualisation du combat
+        time.sleep(1)
