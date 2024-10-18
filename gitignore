@@ -1,0 +1,24 @@
+# Exclure l'environnement virtuel
+venv/
+
+# Exclure les fichiers compilés Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Exclure les fichiers de log
+*.log
+
+# Exclure les fichiers de configuration d'éditeurs de texte (comme VSCode)
+.vscode/
+.idea/
+
+# Exclure les fichiers de paquets compressés
+*.tar.gz
+*.zip
+*.egg
+*.egg-info/
+dist/
+build/
+
