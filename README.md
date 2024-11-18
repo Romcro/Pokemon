@@ -62,7 +62,7 @@ Avant le tournoi, les 16 participants sont affichés avec leurs images et noms r
 
 L'interface montre les Pokémon en combat avec leurs noms et une zone de texte détaillant le déroulement des attaques.
 
-![Combat](img-read-me/image_two.png)
+![Combat](img-read-me/image_three.png)
 
 ## Utilisation
 
